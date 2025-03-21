@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DepartmentsRepository } from './departments.repository';
 import { Department } from './departments.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DepartmentsService {
-    constructor(
-        @InjectRepository(Department)
-        private departmentRepo:Repository<Department>
-    ){}
+  constructor(private departmentRepo: DepartmentsRepository) {}
 
-    async createDepartment(data){
-        return await this.departmentRepo.save(data)
-    }
+  async createDepartment(data) {
+    return await this.departmentRepo.createDepartment(data);
+  }
+
+  async getDepartments() {
+    return await this.departmentRepo.getDepartments();
+  }
+
+  async getDepartmentById(id: string): Promise<Department> {
+    return await this.departmentRepo.getDepartmentById(id);
+  }
 }

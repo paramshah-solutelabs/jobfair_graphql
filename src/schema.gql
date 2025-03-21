@@ -1,0 +1,326 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Possible statuses of a job application"""
+enum ApplicationStatus {
+  APPROVED
+  HIRED
+  INTERVIEW
+  NEW
+  OFFER
+  REJECTED
+  REVIEW
+  SCREENING
+}
+
+type AuthResponse {
+  access_token: String!
+}
+
+type Candidate {
+  created_at: DateTime!
+  current_company: String
+  current_position: String
+  email: String!
+  first_name: String
+  id: ID!
+  image_url: String
+  last_name: String
+  linkedIn_url: String
+  notes: String
+  password: String
+  phone: String
+  rejection_date: DateTime
+  resume_url: String
+  source: String
+  status: Status
+  token: Tokens
+  updated_at: DateTime!
+}
+
+input CreateCandidateDto {
+  current_company: String
+  current_position: String
+  email: String!
+  first_name: String!
+  last_name: String!
+  linkedIn_url: String
+  notes: String
+  password: String!
+  phone: String!
+  source: String
+  status: Status
+}
+
+input CreateEmployeeDto {
+  department_id: String!
+  email: String!
+  employment_status: EmployeeStatus!
+  first_name: String!
+  hire_date: String!
+  is_Active: Boolean!
+  last_name: String!
+  phone: String!
+  role: String!
+  type: EmployeeType
+}
+
+input CreateInterviewDto {
+  applicationId: String!
+  date: String!
+  employeeId: String!
+  interviewId: String
+  meeting_link: String!
+  notes: String!
+  round: Float!
+  scheduled_end_time: String!
+  scheduled_start_time: String!
+  status: MeetingStatus!
+  type: MeetingType!
+}
+
+input CreateJobApplicationDto {
+  cover_letter_url: String
+  email: String!
+  expected_salary: Float
+  positionId: String
+  referral_source: String
+  resume_url: String!
+  status: ApplicationStatus = NEW
+}
+
+input CreatePositionDto {
+  closing_date: String!
+  departmentId: String!
+  description: String!
+  experience_level: String!
+  is_remote: Boolean!
+  location: String!
+  openings: Float!
+  position_type: String!
+  posted_date: String!
+  requirements: String!
+  salary_max: Float!
+  salary_min: Float!
+  title: String!
+}
+
+input CreateReviewDto {
+  communication_score: Float!
+  employeeId: String!
+  interviewId: String!
+  is_Recommended: Boolean!
+  review_date: String!
+  review_text: String!
+  status: reviewStatus!
+  technical_score: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Department {
+  created_at: DateTime!
+  description: String!
+  employees: [Employee!]
+  id: String!
+  isActive: Boolean!
+  name: String!
+  positions: [Position!]
+  updated_at: DateTime!
+}
+
+type Employee {
+  created_At: DateTime!
+  department: Department!
+  email: String!
+  employment_status: EmployeeStatus!
+  first_name: String!
+  hire_date: String!
+  id: String!
+  interviews: [Interview!]
+  is_Active: Boolean!
+  last_name: String!
+  password: String
+  phone: String!
+  reviews: [Review!]
+  role: String!
+  token: Tokens
+  type: EmployeeType
+  updated_At: DateTime!
+}
+
+"""Represents the employment status of an employee"""
+enum EmployeeStatus {
+  Active
+  Contract
+  Fulltime
+  Invited
+  Parttime
+}
+
+"""Types of employees in the system"""
+enum EmployeeType {
+  HIRINGMANAGER
+  HR
+  INTERVIEWER
+  RECRUITER
+}
+
+type Interview {
+  application: JobApplication!
+  created_at: DateTime!
+  date: String!
+  employee: Employee!
+  id: String!
+  meeting_link: String!
+  notes: String!
+  reviews: [Review!]
+  round: Int!
+  scheduled_end_time: String!
+  scheduled_start_time: String!
+  status: MeetingStatus!
+  type: MeetingType!
+  updated_at: DateTime!
+}
+
+input InviteEmployeeDto {
+  email: String!
+  role: EmployeeType!
+}
+
+type InviteResponse {
+  message: String!
+}
+
+type JobApplication {
+  application_date: String!
+  cover_letter_url: String
+  created_at: DateTime!
+  email: String!
+  expected_salary: Float
+  has_reviewed: Boolean!
+  id: String!
+  internal_notes: String
+  interview: [Interview!]
+  position: Position!
+  referral_source: String
+  resume_url: String!
+  status: ApplicationStatus!
+  updated_at: DateTime!
+}
+
+input LoginUserDto {
+  email: String!
+  password: String!
+}
+
+enum MeetingStatus {
+  CANCELLED
+  COMPLETED
+  SCHEDULED
+}
+
+enum MeetingType {
+  IN_PERSON
+  PHONE
+  VIRTUAL
+}
+
+type Mutation {
+  candidateLogin(loginCandidateData: LoginUserDto!): AuthResponse!
+  createApplication(data: CreateJobApplicationDto!): JobApplication!
+  createCandidate(data: CreateCandidateDto!): Candidate!
+  createDepartment(data: createDepartmentDto!): Department!
+  createEmployee(data: CreateEmployeeDto!): Employee!
+  createInterview(data: CreateInterviewDto!): Interview!
+  createPosition(data: CreatePositionDto!): Position!
+  createReview(data: CreateReviewDto!): Review!
+  employeeLogin(data: LoginUserDto!): AuthResponse!
+  inviteEmployee(data: InviteEmployeeDto!): InviteResponse!
+  registerCandidate(registerCandidateData: SetCandidateDto!): Candidate!
+  setEmployeePassword(password: String!): Employee!
+}
+
+type Position {
+  closing_date: String!
+  created_at: DateTime!
+  department: Department!
+  description: String!
+  experience_level: String!
+  id: String!
+  is_remote: Boolean!
+  jobapplications: [JobApplication!]
+  location: String!
+  openings: Float!
+  position_type: String!
+  posted_date: String!
+  requirements: String!
+  salary_max: Float!
+  salary_min: Float!
+  title: String!
+  updated_at: DateTime!
+}
+
+type Query {
+  getCandidateById(id: String!): Candidate!
+  getDepartmentById(id: String!): Department!
+  getDepartments: [Department!]!
+}
+
+type Review {
+  communication_score: Float!
+  created_at: DateTime!
+  employee: Employee!
+  id: ID!
+  interview: Interview!
+  is_Recommended: Boolean!
+  review_date: String!
+  review_text: String!
+  status: reviewStatus!
+  technical_score: Float!
+  updated_at: DateTime!
+}
+
+input SetCandidateDto {
+  current_company: String
+  current_position: String
+  first_name: String!
+  last_name: String!
+  linkedIn_url: String
+  notes: String
+  password: String!
+  phone: String!
+  source: String
+  status: Status
+}
+
+"""Candidate account status"""
+enum Status {
+  Active
+  Blocklisted
+  Inactive
+}
+
+type Tokens {
+  candidate: Candidate
+  employee: Employee
+  expiryDate: DateTime!
+  id: ID!
+  token: String!
+}
+
+input createDepartmentDto {
+  description: String!
+  name: String!
+}
+
+"""Represents the status of a review"""
+enum reviewStatus {
+  APPROVED
+  DRAFT
+  SUBMITTED
+}
