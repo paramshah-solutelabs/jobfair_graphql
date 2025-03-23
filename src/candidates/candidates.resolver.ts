@@ -7,6 +7,7 @@ import { SetCandidateDto } from './dto/setCandidate.dto';
 import { Context } from '@nestjs/graphql';
 import { LoginUserDto } from './dto/login-candidate.dto';
 import { AuthResponse } from './dto/auth-response.dto';
+import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
 
 @Resolver(() => Candidate)
 export class CandidatesResolver {
@@ -40,4 +41,22 @@ export class CandidatesResolver {
   ) {
     return this.candidateService.loginCandidate(loginCandidateData);
   }
+
+  @Mutation(() => InviteResponse)
+  async candidateForgotPassword(
+    @Args('email') email: string,
+  ): Promise<InviteResponse> {
+    return await this.candidateService.forgotPassword(email);
+  }
+
+  @Mutation(() => Candidate)
+  async candidateResetPassword(
+    @Args('password') password: string,
+    @Context() context:any
+  ): Promise<Candidate> { 
+    const token = context.req.headers.token;
+    return await this.candidateService.resetPassword(password, token);
+  }
+
+
 }

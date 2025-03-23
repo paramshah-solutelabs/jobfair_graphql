@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './employees.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -117,4 +117,39 @@ export class EmployeeRepository {
       console.log(jwtToken);
       return {access_token:jwtToken}
     }
+
+    async forgotPassword(email:string):Promise<InviteResponse>{
+      const employee = await this.employeeRepository.findOne({where:{email}});
+      if(!employee || !employee.password){
+        throw new NotFoundException("Something went wrong")
+      }
+      const token = uuid();
+      await this.tokenService.createToken(employee,token);
+      await this.emailService.forgotPassword(
+        employee.first_name,
+        email,
+        token
+      )
+      return {message:'We have sent an email to reset your password'}
+
+   }
+
+   async employeePasswordReset(password:string,token:string):Promise<Employee>{
+      if(!password){
+        throw new BadRequestException();
+      }
+      const validateToken=await this.tokenService.validateToken(token);
+      if(!validateToken.employee){
+        throw new BadRequestException();
+      }
+      const employee=await this.employeeRepository.findOne({where:{id:validateToken.employee.id}});
+      if(!employee){
+        throw new NotFoundException()
+      }
+      const encryptedPassword=await bcrypt.hash(password,10)
+      employee.password=encryptedPassword;
+      await this.employeeRepository.save(employee);
+      await this.tokenService.deleteToken(validateToken.id);
+      return employee;
+   }
 }

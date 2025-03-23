@@ -5,6 +5,7 @@ import { Candidate } from './candidate.entity';
 import { SetCandidateDto } from './dto/setCandidate.dto';
 import { LoginUserDto } from './dto/login-candidate.dto';
 import { AuthResponse } from './dto/auth-response.dto';
+import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
 
 @Injectable()
 export class CandidatesService {
@@ -22,6 +23,15 @@ export class CandidatesService {
     return await this.candidateRepo.createCandidateWithApplication(email);
   }
 
+  async forgotPassword(email:string):Promise<InviteResponse>{
+    return await this.candidateRepo.forgotPassword(email)
+  }
+
+  async resetPassword(password:string,token:string):Promise<Candidate>{
+    return await this.candidateRepo.candidateResetPassword(password,token);
+  }
+
+
   async registerCandidate(
     setCandidateData: SetCandidateDto,
     token: string,
@@ -34,4 +44,5 @@ export class CandidatesService {
   ): Promise<AuthResponse> {
     return await this.candidateRepo.candidateLogin(loginCandidateData);
   }
+
 }

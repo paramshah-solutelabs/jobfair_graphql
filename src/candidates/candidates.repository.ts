@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Candidate } from './candidate.entity';
 import { Repository } from 'typeorm';
@@ -10,6 +10,9 @@ import { Status } from './enums/candidate-status.enum';
 import { JwtService } from '@nestjs/jwt';
 import { AuthResponse } from './dto/auth-response.dto';
 import { LoginUserDto } from './dto/login-candidate.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { EmailService } from 'src/email/email.service';
+import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
 
 @Injectable()
 export class CandidatesRepository {
@@ -18,6 +21,7 @@ export class CandidatesRepository {
     private candidateRepo: Repository<Candidate>,
     private tokenService: TokensService,
     private jwtService: JwtService,
+    private emailService:EmailService
   ) {}
 
   async createCandidate(createCandidateData: CreateCandidateDto) {
@@ -80,6 +84,47 @@ export class CandidatesRepository {
   async getCandidateById(id: string): Promise<Candidate> {
     const candidate = await this.candidateRepo.findOne({ where: { id } });
     if (!candidate) {
+      throw new NotFoundException();
+    }
+    return candidate;
+  }
+
+  async forgotPassword(email:string):Promise<InviteResponse>{
+    const candidate=await this.candidateRepo.findOne({where:{email}});
+
+    if(!candidate || !candidate.password){
+      throw new NotFoundException()
+    }
+    const newToken=uuidv4();
+    await this.tokenService.createToken(candidate,newToken);
+    await this.emailService.forgotPassword('candidate',email,newToken);
+    return {message:'We have sent an email to reset your password'}
+  }
+
+  async candidateResetPassword(password:string,token:string):Promise<Candidate>{
+    if(!password){
+      throw new BadRequestException("Enter password")
+    }
+    const validateToken=await this.tokenService.validateToken(token);
+    if(!validateToken.candidate){
+      throw new BadRequestException();
+    }
+    const candidate=await this.candidateRepo.findOne({where:{id:validateToken.candidate.id}});
+    if(!candidate){
+      throw new NotFoundException();
+    }
+    const encryptedPassword=await bcrypt.hash(password,10)
+    candidate.password=encryptedPassword;
+    await this.candidateRepo.save(candidate);
+    await this.tokenService.deleteToken(validateToken.id);
+    return candidate;
+
+  }
+
+
+  async getCandidateByEmail(email:string):Promise<Candidate>{
+    const candidate=await this.candidateRepo.findOne({where:{email}});
+    if(!candidate){
       throw new NotFoundException();
     }
     return candidate;

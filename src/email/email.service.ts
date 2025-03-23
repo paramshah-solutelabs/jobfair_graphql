@@ -52,6 +52,7 @@ export class EmailService {
     token: string,
     role?: EmployeeType,
   ) {
+    console.log(name,email,token,type)
     let subject = '';
     let templateId: number;
     let templateModel: any = {

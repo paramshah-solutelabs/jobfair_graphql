@@ -7,6 +7,7 @@ import { Candidate } from './candidate.entity';
 import { PassportModule } from '@nestjs/passport';
 import { TokensModule } from 'src/tokens/tokens.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthModule } from 'src/auth/auth.module';
     TokensModule,
     AuthModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    EmailModule
   ],
   providers: [CandidatesService, CandidatesResolver, CandidatesRepository],
   exports: [CandidatesService],

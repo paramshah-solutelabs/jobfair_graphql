@@ -10,7 +10,7 @@ import { Tokens } from './tokens/tokens.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: 'postgresql://employees_sgp1_user:w48umRsEl4XFabAPw5RSCoDIbajgtsdp@dpg-cvbr76aj1k6c73e189f0-a.oregon-postgres.render.com/employees_sgp1',
+  url:process.env.DB_URL,
   ssl: true,
   extra: {
     ssl: {

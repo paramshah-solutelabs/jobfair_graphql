@@ -22,6 +22,7 @@ export class EmployeesService {
     return await this.employeeRepository.getEmployeeById(id);
   }
 
+
   async inviteEmployee(inviteEmployeeData: InviteEmployeeDto):Promise<InviteResponse> {
     return await this.employeeRepository.inviteEmployee(inviteEmployeeData);
   }
@@ -35,5 +36,13 @@ export class EmployeesService {
 
   async loginEmployee(loginEmployeeData:LoginUserDto):Promise<AuthResponse>{
     return await this.employeeRepository.loginEmployee(loginEmployeeData);
+  }
+
+  async forgotPassword(email:string){
+    return await this.employeeRepository.forgotPassword(email);
+  }
+
+  async resetPassword(password:string,token:string):Promise<Employee>{
+    return await this.employeeRepository.employeePasswordReset(password,token);
   }
 }

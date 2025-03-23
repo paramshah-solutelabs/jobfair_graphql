@@ -231,7 +231,9 @@ enum MeetingType {
 }
 
 type Mutation {
+  candidateForgotPassword(email: String!): InviteResponse!
   candidateLogin(loginCandidateData: LoginUserDto!): AuthResponse!
+  candidateResetPassword(password: String!): Candidate!
   createApplication(data: CreateJobApplicationDto!): JobApplication!
   createCandidate(data: CreateCandidateDto!): Candidate!
   createDepartment(data: createDepartmentDto!): Department!
@@ -239,7 +241,9 @@ type Mutation {
   createInterview(data: CreateInterviewDto!): Interview!
   createPosition(data: CreatePositionDto!): Position!
   createReview(data: CreateReviewDto!): Review!
+  employeeForgotPassword(email: String!): InviteResponse!
   employeeLogin(data: LoginUserDto!): AuthResponse!
+  employeePasswordReset(password: String!): Employee!
   inviteEmployee(data: InviteEmployeeDto!): InviteResponse!
   registerCandidate(registerCandidateData: SetCandidateDto!): Candidate!
   setEmployeePassword(password: String!): Employee!
