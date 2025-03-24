@@ -3,8 +3,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Candidate } from 'src/candidates/candidate.entity';
-import { Employee } from 'src/employees/employees.entity';
+import { Candidate } from './../../src/candidates/candidate.entity';
+import { Employee } from './../../src/employees/employees.entity';
 
 @Module({
   imports: [

@@ -4,11 +4,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Query } from '@nestjs/graphql';
 import { JobApplication } from './jobapplication.entity';
 import { CreateJobApplicationDto } from './dto/create-application.dto';
-import { PositionsService } from 'src/positions/positions.service';
-import { CandidatesService } from 'src/candidates/candidates.service';
-import { EmailService } from 'src/email/email.service';
+import { PositionsService } from './../../src/positions/positions.service';
+import { CandidatesService } from './../../src/candidates/candidates.service';
+import { EmailService } from './../../src/email/email.service';
 import { v4 as uuidv4 } from 'uuid';
-import { TokensService } from 'src/tokens/tokens.service';
+import { TokensService } from './../../src/tokens/tokens.service';
 
 @Injectable()
 export class JobApplicationRepository {

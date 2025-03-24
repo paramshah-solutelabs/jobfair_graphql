@@ -4,8 +4,8 @@ import { ReviewsResolver } from './reviews.resolver';
 import { ReviewsRepository } from './reviews.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Review } from './reviews.entity';
-import { EmployeesModule } from 'src/employees/employees.module';
-import { InterviewsModule } from 'src/interviews/interviews.module';
+import { EmployeesModule } from './../../src/employees/employees.module';
+import { InterviewsModule } from './../../src/interviews/interviews.module';
 
 @Module({
   imports: [

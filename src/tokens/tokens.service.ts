@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Tokens } from './tokens.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Candidate } from 'src/candidates/candidate.entity';
-import { Employee } from 'src/employees/employees.entity';
+import { Candidate } from './../../src/candidates/candidate.entity';
+import { Employee } from './../../src/employees/employees.entity';
+
 import { v4 as uuid } from 'uuid';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 

@@ -1,4 +1,4 @@
-import { Department } from 'src/departments/departments.entity';
+import { Department } from './../../src/departments/departments.entity';
 import { AppDataSource } from 'src/data-source';
 
 const seedDepartments = async () => {

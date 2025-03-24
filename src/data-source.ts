@@ -10,13 +10,7 @@ import { Tokens } from './tokens/tokens.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url:process.env.DB_URL,
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  url:`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   entities: [
     Department,
     Position,

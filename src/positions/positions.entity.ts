@@ -7,8 +7,8 @@ import {
   Entity,
   OneToMany,
 } from 'typeorm';
-import { Department } from 'src/departments/departments.entity';
-import { JobApplication } from 'src/jobapplication/jobapplication.entity';
+import { Department } from './../../src/departments/departments.entity';
+import { JobApplication } from './../../src/jobapplication/jobapplication.entity';
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @Entity()

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Position } from './positions.entity';
 import { Repository } from 'typeorm';
 import { CreatePositionDto } from './dto/create-position.dto';
-import { DepartmentsService } from 'src/departments/departments.service';
+import { DepartmentsService } from './../../src/departments/departments.service';
 
 @Injectable()
 export class PositionsRepository {

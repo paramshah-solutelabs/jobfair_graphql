@@ -1,20 +1,13 @@
-# Use an official Node.js image
-FROM node:18-alpine
+FROM node:16
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json before copying source code (to leverage Docker caching)
 COPY package*.json ./
 
-# Install dependencies explicitly
-RUN npm install --only=production
+RUN npm install
 
-# Copy the remaining project files
 COPY . .
 
-# Expose the port your app runs on
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:dev"]

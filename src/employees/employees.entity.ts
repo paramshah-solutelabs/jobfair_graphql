@@ -11,10 +11,10 @@ import {
 } from 'typeorm';
 import { EmployeeStatus } from './enums/employment-status.enum';
 import { EmployeeType } from './enums/employee-type.enum';
-import { Department } from 'src/departments/departments.entity';
-import { Interview } from 'src/interviews/interviews.entity';
-import { Review } from 'src/reviews/reviews.entity';
-import { Tokens } from 'src/tokens/tokens.entity';
+import { Department } from './../../src/departments/departments.entity';
+import { Interview } from './../../src/interviews/interviews.entity';
+import { Review } from './../../src/reviews/reviews.entity';
+import { Tokens } from './../../src/tokens/tokens.entity';
 
 @ObjectType()
 @Entity()

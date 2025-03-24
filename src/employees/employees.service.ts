@@ -4,8 +4,8 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { Employee } from './employees.entity';
 import { LoginEmployeeDto } from './dto/login-employee.dto';
 import { InviteEmployeeDto } from './dto/invite-employee.dto';
-import { AuthResponse } from 'src/candidates/dto/auth-response.dto';
-import { LoginUserDto } from 'src/candidates/dto/login-candidate.dto';
+import { AuthResponse } from './../../src/candidates/dto/auth-response.dto';
+import { LoginUserDto } from './../../src/candidates/dto/login-candidate.dto';
 import { InviteResponse } from './dto/invite-sent.dto';
 
 @Injectable()

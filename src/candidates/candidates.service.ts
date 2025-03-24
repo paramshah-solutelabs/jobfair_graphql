@@ -5,7 +5,7 @@ import { Candidate } from './candidate.entity';
 import { SetCandidateDto } from './dto/setCandidate.dto';
 import { LoginUserDto } from './dto/login-candidate.dto';
 import { AuthResponse } from './dto/auth-response.dto';
-import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
+import { InviteResponse } from './../../src/employees/dto/invite-sent.dto';
 
 @Injectable()
 export class CandidatesService {

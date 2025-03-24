@@ -9,8 +9,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Status } from './enums/candidate-status.enum';
-import { Tokens } from 'src/tokens/tokens.entity';
-import { JobApplication } from 'src/jobapplication/jobapplication.entity';
+import { Tokens } from './../../src/tokens/tokens.entity';
+import { JobApplication } from './../../src/jobapplication/jobapplication.entity';
 
 @ObjectType()
 @Entity()

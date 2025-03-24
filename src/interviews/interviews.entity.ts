@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 import { MeetingType } from './enums/meetingType.enum';
 import { MeetingStatus } from './enums/meetingStatus.enum';
-import { Employee } from 'src/employees/employees.entity';
-import { JobApplication } from 'src/jobapplication/jobapplication.entity';
+import { Employee } from './../../src/employees/employees.entity';
+import { JobApplication } from './../../src/jobapplication/jobapplication.entity';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Review } from 'src/reviews/reviews.entity';
+import { Review } from './../../src/reviews/reviews.entity';
 
 @ObjectType()
 @Entity()

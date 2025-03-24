@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
 import { DataSource } from 'typeorm';
 import { ServerClient } from 'postmark';
-import { EmployeeType } from 'src/employees/enums/employee-type.enum';
+import { EmployeeType } from './../../src/employees/enums/employee-type.enum';
 
 @Injectable()
 export class EmailService {

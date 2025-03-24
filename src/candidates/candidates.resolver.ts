@@ -7,7 +7,7 @@ import { SetCandidateDto } from './dto/setCandidate.dto';
 import { Context } from '@nestjs/graphql';
 import { LoginUserDto } from './dto/login-candidate.dto';
 import { AuthResponse } from './dto/auth-response.dto';
-import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
+import { InviteResponse } from './../../src/employees/dto/invite-sent.dto';
 
 @Resolver(() => Candidate)
 export class CandidatesResolver {

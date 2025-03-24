@@ -5,8 +5,8 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { InviteEmployeeDto } from './dto/invite-employee.dto';
 import { Context } from '@nestjs/graphql';
 import { NotFoundException } from '@nestjs/common';
-import { AuthResponse } from 'src/candidates/dto/auth-response.dto';
-import { LoginUserDto } from 'src/candidates/dto/login-candidate.dto';
+import { AuthResponse } from './../../src/candidates/dto/auth-response.dto';
+import { LoginUserDto } from './../../src/candidates/dto/login-candidate.dto';
 import { InviteResponse } from './dto/invite-sent.dto';
 import { BadRequestException } from '@nestjs/common';
 

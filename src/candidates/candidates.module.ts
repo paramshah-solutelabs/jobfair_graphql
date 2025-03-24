@@ -5,9 +5,9 @@ import { CandidatesRepository } from './candidates.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Candidate } from './candidate.entity';
 import { PassportModule } from '@nestjs/passport';
-import { TokensModule } from 'src/tokens/tokens.module';
-import { AuthModule } from 'src/auth/auth.module';
-import { EmailModule } from 'src/email/email.module';
+import { TokensModule } from './../../src/tokens/tokens.module';
+import { AuthModule } from './../../src/auth/auth.module';
+import { EmailModule } from './../../src/email/email.module';
 
 @Module({
   imports: [

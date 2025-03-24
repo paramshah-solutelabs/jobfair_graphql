@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Candidate } from './candidate.entity';
 import { Repository } from 'typeorm';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
-import { TokensService } from 'src/tokens/tokens.service';
+import { TokensService } from './../../src/tokens/tokens.service';
 import { SetCandidateDto } from './dto/setCandidate.dto';
 import * as bcrypt from 'bcryptjs';
 import { Status } from './enums/candidate-status.enum';
@@ -11,8 +11,8 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthResponse } from './dto/auth-response.dto';
 import { LoginUserDto } from './dto/login-candidate.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { EmailService } from 'src/email/email.service';
-import { InviteResponse } from 'src/employees/dto/invite-sent.dto';
+import { EmailService } from './../../src/email/email.service';
+import { InviteResponse } from './../../src/employees/dto/invite-sent.dto';
 
 @Injectable()
 export class CandidatesRepository {

@@ -4,7 +4,7 @@ import { Position } from './positions.entity';
 import { PositionsResolver } from './positions.resolver';
 import { PositionsService } from './positions.service';
 import { PositionsRepository } from './positions.repository';
-import { DepartmentsModule } from 'src/departments/departments.module';
+import { DepartmentsModule } from './../../src/departments/departments.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Position]), DepartmentsModule],

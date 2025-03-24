@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Employee } from 'src/employees/employees.entity';
+import { Employee } from './../../src/employees/employees.entity';
 import { Repository } from 'typeorm';
 import { CreateInterviewDto } from './dto/create-interview.dto';
 import { Interview } from './interviews.entity';
-import { EmployeesService } from 'src/employees/employees.service';
-import { JobapplicationService } from 'src/jobapplication/jobapplication.service';
+import { EmployeesService } from './../../src/employees/employees.service';
+import { JobapplicationService } from './../../src/jobapplication/jobapplication.service';
 
 @Injectable()
 export class InterviewRepository {
