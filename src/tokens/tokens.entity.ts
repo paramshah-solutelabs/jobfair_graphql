@@ -20,6 +20,7 @@ export class Tokens {
   @Field()
   @Column()
   token: string;
+  
 
   @Field(() => Candidate, { nullable: true })
   @OneToOne(() => Candidate, (candidate) => candidate.token, {

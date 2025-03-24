@@ -29,9 +29,7 @@ export class EmployeesResolver {
     @Args('password') password: string,
     @Context() context: any,
   ): Promise<Employee> {
-    console.log(password);
     const token = context.req.headers.token;
-    console.log(token)
     if (!token) {
       throw new NotFoundException();
     }

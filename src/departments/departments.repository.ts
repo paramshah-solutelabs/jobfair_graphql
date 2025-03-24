@@ -3,12 +3,14 @@ import { Repository } from 'typeorm';
 import { Department } from './departments.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createDepartmentDto } from './dto/create-department.dto';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class DepartmentsRepository {
   constructor(
     @InjectRepository(Department)
     private departmentRepo: Repository<Department>,
+    private dataSource:DataSource
   ) {}
 
   async createDepartment(

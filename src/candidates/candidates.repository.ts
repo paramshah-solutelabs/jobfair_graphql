@@ -75,9 +75,7 @@ export class CandidatesRepository {
     }
 
     const payload = { id: candidate.id, email: candidate.email };
-    console.log(payload);
     const jwtToken = await this.jwtService.sign(payload);
-    console.log(jwtToken);
     return { access_token: jwtToken };
   }
 

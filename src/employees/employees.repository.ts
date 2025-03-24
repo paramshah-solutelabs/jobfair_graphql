@@ -73,7 +73,6 @@ export class EmployeeRepository {
     );
     employee.employment_status = EmployeeStatus.Invited;
     await this.employeeRepository.save(employee);
-    console.log("hey");
     return {message:'Employee invitation sent'};
   }
 
@@ -111,10 +110,7 @@ export class EmployeeRepository {
         throw new UnauthorizedException("Invalid credentials");
       }
       const payload = { id: employee.id, email: employee.email };
-      console.log(payload);
       const jwtToken = await this.jwtService.sign(payload);
-      console.log(jwtToken);
-      console.log(jwtToken);
       return {access_token:jwtToken}
     }
 

@@ -17,7 +17,7 @@ export class DepartmentResolver {
     return await this.departmentService.createDepartment(data);
   }
 
-  @UseGuards(GqlAuthGuard,IsEmployee)
+  // @UseGuards(GqlAuthGuard,IsEmployee)
   @Query(() => [Department])
   async getDepartments(): Promise<Department[]> {
     return await this.departmentService.getDepartments();

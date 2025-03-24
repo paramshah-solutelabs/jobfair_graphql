@@ -7,10 +7,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import { Position } from 'src/positions/positions.entity';
 import { ApplicationStatus } from './enums/job-application.status.enum';
 import { Interview } from 'src/interviews/interviews.entity';
+import { Candidate } from 'src/candidates/candidate.entity';
 
 @ObjectType()
 @Entity()

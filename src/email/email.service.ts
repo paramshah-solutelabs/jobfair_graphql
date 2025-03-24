@@ -52,7 +52,6 @@ export class EmailService {
     token: string,
     role?: EmployeeType,
   ) {
-    console.log(name,email,token,type)
     let subject = '';
     let templateId: number;
     let templateModel: any = {
@@ -63,7 +62,6 @@ export class EmailService {
     };
 
     if (type === 'candidate') {
-      console.log('hello');
       subject = 'JobFair2 - Application Received & Next Steps';
       templateId = 39079447;
     } else if (type === 'employee') {

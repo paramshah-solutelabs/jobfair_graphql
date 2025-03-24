@@ -31,7 +31,6 @@ export class JobApplicationRepository {
       await this.candidateService.createCandidateWithApplication(
         createApplicationData.email,
       );
-    console.log(createCandidate);
     const createApplication = this.applicationRepo.create(
       createApplicationData,
     );

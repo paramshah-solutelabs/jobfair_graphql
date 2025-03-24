@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: jobfair_nestjs
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  hasura:
+    image: hasura/graphql-engine:v2.41.0
+    container_name: hasura
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://employees_sgp1_user:w48umRsEl4XFabAPw5RSCoDIbajgtsdp@dpg-cvbr76aj1k6c73e189f0-a.oregon-postgres.render.com/employees_sgp1
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: mysecretkey
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: employees_sgp1_user
+      POSTGRES_PASSWORD: w48umRsEl4XFabAPw5RSCoDIbajgtsdp
+      POSTGRES_DB: employees_sgp1
