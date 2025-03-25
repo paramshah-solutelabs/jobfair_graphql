@@ -1,0 +1,29 @@
+table:
+  name: employee
+  schema: public
+object_relationships:
+  - name: department
+    using:
+      foreign_key_constraint_on: departmentId
+  - name: token
+    using:
+      foreign_key_constraint_on:
+        column: employeeId
+        table:
+          name: tokens
+          schema: public
+array_relationships:
+  - name: interviews
+    using:
+      foreign_key_constraint_on:
+        column: employeeId
+        table:
+          name: interview
+          schema: public
+  - name: reviews
+    using:
+      foreign_key_constraint_on:
+        column: employeeId
+        table:
+          name: review
+          schema: public

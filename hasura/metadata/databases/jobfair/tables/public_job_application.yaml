@@ -1,0 +1,15 @@
+table:
+  name: job_application
+  schema: public
+object_relationships:
+  - name: position
+    using:
+      foreign_key_constraint_on: positionId
+array_relationships:
+  - name: interviews
+    using:
+      foreign_key_constraint_on:
+        column: applicationId
+        table:
+          name: interview
+          schema: public

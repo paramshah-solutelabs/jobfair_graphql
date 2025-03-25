@@ -1,0 +1,33 @@
+table:
+  name: department
+  schema: public
+array_relationships:
+  - name: employees
+    using:
+      foreign_key_constraint_on:
+        column: departmentId
+        table:
+          name: employee
+          schema: public
+  - name: positions
+    using:
+      foreign_key_constraint_on:
+        column: departmentId
+        table:
+          name: position
+          schema: public
+insert_permissions:
+  - role: hr
+    permission:
+      check: {}
+      columns: []
+    comment: ""
+select_permissions:
+  - role: hr
+    permission:
+      columns:
+        - description
+        - isActive
+        - name
+      filter: {}
+    comment: ""
