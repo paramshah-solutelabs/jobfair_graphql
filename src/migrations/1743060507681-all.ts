@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class All1742983202527 implements MigrationInterface {
-    name = 'All1742983202527'
+export class All1743060507681 implements MigrationInterface {
+    name = 'All1743060507681'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "public"."review_status_enum" AS ENUM('Draft', 'Submitted', 'Approved')`);
