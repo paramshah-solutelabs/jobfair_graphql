@@ -1,60 +1,66 @@
-  services:
-    postgres:
-      image: postgres:latest
-      restart: always
-      env_file:
-        - .env
-      environment:
-        POSTGRES_DB: jobfair
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      ports:
-        - "5432:5432"
-      volumes:
-        - pg_data:/var/lib/postgresql/data
 
-    hasura:
-      image: hasura/graphql-engine:latest
-      restart: always
-      ports:
-        - "8080:8080"
-      depends_on:
-        - postgres
-      env_file:
-        - .env
-      environment:
-        HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/jobfair"
-        HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-        HASURA_GRAPHQL_DEV_MODE: "true"
-        HASURA_GRAPHQL_ADMIN_SECRET: ironwoman890
+version: "3.8"
 
-    nestjs:
-      build: .
-      depends_on:
-        - postgres
-        - hasura
-      ports:
-        - "3000:3000"
-      env_file:
-        - .env
-      environment:
-        HASURA_GRAPHQL_ADMIN_SECRET: ironwoman890
-        HASURA_GRAPHQL_ENDPOINT: http://hasura:8080/v1/graphql
-        DATABASE_URL: "postgres://postgres:postgres@postgres:5432/jobfair"
-      volumes:
-        - .:/app
-        - /app/node_modules
-      working_dir: /app
-      command: ["npm", "run", "start:dev"]
-      develop:
-        watch:
-          - action: sync
-            path: . # Sync all files
-            target: /app
-            ignore:
-              - node_modules/
-          - action: rebuild
-            path: package.json
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: jobfair
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
 
-  volumes:
-    pg_data:
+  hasura:
+    image: hasura/graphql-engine:latest
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/jobfair"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "ironwoman890"
+      HASURA_GRAPHQL_JWT_SECRET: >
+       {
+        "type": "HS256",
+        "key": "a3f89c2b7d5e461fa8cbe2d0174f9a6ddf327b1c6e8a5c4f0d7e3b98a12f6c7d",
+        "claims_namespace_path": "$.hasura_claims",
+        "claims_map": {
+           "x-hasura-user-id": {"path": "$.hasura_claims.x-hasura-user-id"},
+           "x-hasura-default-role": {"path": "$.hasura_claims.x-hasura-default-role"},
+           "x-hasura-allowed-roles": {"path": "$.hasura_claims.x-hasura-allowed-roles"}
+         }
+       }
+
+
+  nestjs:
+    build: .
+    depends_on:
+      - postgres
+      - hasura
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      HASURA_GRAPHQL_ENDPOINT: "http://hasura:8080/v1/graphql"
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/jobfair"
+      JWT_SECRET: "a3f89c2b7d5e461fa8cbe2d0174f9a6ddf327b1c6e8a5c4f0d7e3b98a12f6c7d"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    command: ["npm", "run", "start:dev"]
+
+volumes:
+  pg_data:

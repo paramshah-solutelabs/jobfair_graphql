@@ -3,8 +3,9 @@ import { DepartmentsService } from './departments.service';
 import { createDepartmentDto } from './dto/create-department.dto';
 import { Department } from './departments.entity';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
-import { IsEmployee } from 'src/employees/guards/isEmployee.guard';
+import { GqlAuthGuard } from './../../src/auth/gql-auth.guard';
+import { IsEmployee } from './../../src/employees/guards/isEmployee.guard';
+import { isEmployee } from './../../src/auth/guards/isEmployee.guard';
 
 @Resolver(() => Department)
 export class DepartmentResolver {
@@ -13,11 +14,12 @@ export class DepartmentResolver {
   @Mutation(() => Department)
   async createDepartment(
     @Args('data') data: createDepartmentDto,
+
   ): Promise<Department> {
     return await this.departmentService.createDepartment(data);
   }
 
-  // @UseGuards(GqlAuthGuard,IsEmployee)
+  @UseGuards(GqlAuthGuard,isEmployee)
   @Query(() => [Department])
   async getDepartments(): Promise<Department[]> {
     return await this.departmentService.getDepartments();

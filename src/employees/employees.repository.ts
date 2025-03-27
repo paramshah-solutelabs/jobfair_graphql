@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './employees.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -22,7 +27,7 @@ export class EmployeeRepository {
     private employeeRepository: Repository<Employee>,
     private departmentService: DepartmentsService,
     private tokenService: TokensService,
-    private jwtService:JwtService,
+    private jwtService: JwtService,
     private emailService: EmailService,
   ) {}
 
@@ -55,7 +60,9 @@ export class EmployeeRepository {
     return employee;
   }
 
-  async inviteEmployee(inviteEmployeeData: InviteEmployeeDto):Promise<InviteResponse> {
+  async inviteEmployee(
+    inviteEmployeeData: InviteEmployeeDto,
+  ): Promise<InviteResponse> {
     const employee = await this.employeeRepository.findOne({
       where: { email: inviteEmployeeData.email },
     });
@@ -73,7 +80,7 @@ export class EmployeeRepository {
     );
     employee.employment_status = EmployeeStatus.Invited;
     await this.employeeRepository.save(employee);
-    return {message:'Employee invitation sent'};
+    return { message: 'Employee invitation sent' };
   }
 
   async setEmployeePassword(
@@ -97,55 +104,68 @@ export class EmployeeRepository {
     return employee;
   }
 
-  async loginEmployee(loginEmployeeData:LoginUserDto):Promise<AuthResponse>{
-      const employee=await this.employeeRepository.findOne({where:{email:loginEmployeeData.email}});
-      if(!employee){
-        throw new NotFoundException();
-      }
-      const isPasswordValid = await bcrypt.compare(
-            loginEmployeeData.password,
-            employee.password,
-      );
-      if(!isPasswordValid){
-        throw new UnauthorizedException("Invalid credentials");
-      }
-      const payload = { id: employee.id, email: employee.email };
-      const jwtToken = await this.jwtService.sign(payload);
-      return {access_token:jwtToken}
+  async loginEmployee(loginEmployeeData: LoginUserDto): Promise<AuthResponse> {
+    const employee = await this.employeeRepository.findOne({
+      where: { email: loginEmployeeData.email },
+    });
+    if (!employee) {
+      throw new NotFoundException();
     }
+    const isPasswordValid = await bcrypt.compare(
+      loginEmployeeData.password,
+      employee.password,
+    );
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const payload = {
+      id: employee.id,
+      email: employee.email,
+      hasura_claims : {
+        "x-hasura-user-id": employee.id,
+        "x-hasura-default-role": 'Employee',
+        "x-hasura-allowed-roles": ["Employee","Hr","Interviewer"],
+        // "x-hasura-role":employee.type
+      },
+    };
+    const jwtToken = await this.jwtService.sign(payload);
+    return { access_token: jwtToken };
+  }
 
-    async forgotPassword(email:string):Promise<InviteResponse>{
-      const employee = await this.employeeRepository.findOne({where:{email}});
-      if(!employee || !employee.password){
-        throw new NotFoundException("Something went wrong")
-      }
-      const token = uuid();
-      await this.tokenService.createToken(employee,token);
-      await this.emailService.forgotPassword(
-        employee.first_name,
-        email,
-        token
-      )
-      return {message:'We have sent an email to reset your password'}
+  async forgotPassword(email: string): Promise<InviteResponse> {
+    const employee = await this.employeeRepository.findOne({
+      where: { email },
+    });
+    if (!employee || !employee.password) {
+      throw new NotFoundException('Something went wrong');
+    }
+    const token = uuid();
+    await this.tokenService.createToken(employee, token);
+    await this.emailService.forgotPassword(employee.first_name, email, token);
+    return { message: 'We have sent an email to reset your password' };
+  }
 
-   }
-
-   async employeePasswordReset(password:string,token:string):Promise<Employee>{
-      if(!password){
-        throw new BadRequestException();
-      }
-      const validateToken=await this.tokenService.validateToken(token);
-      if(!validateToken.employee){
-        throw new BadRequestException();
-      }
-      const employee=await this.employeeRepository.findOne({where:{id:validateToken.employee.id}});
-      if(!employee){
-        throw new NotFoundException()
-      }
-      const encryptedPassword=await bcrypt.hash(password,10)
-      employee.password=encryptedPassword;
-      await this.employeeRepository.save(employee);
-      await this.tokenService.deleteToken(validateToken.id);
-      return employee;
-   }
+  async employeePasswordReset(
+    password: string,
+    token: string,
+  ): Promise<Employee> {
+    if (!password) {
+      throw new BadRequestException();
+    }
+    const validateToken = await this.tokenService.validateToken(token);
+    if (!validateToken.employee) {
+      throw new BadRequestException();
+    }
+    const employee = await this.employeeRepository.findOne({
+      where: { id: validateToken.employee.id },
+    });
+    if (!employee) {
+      throw new NotFoundException();
+    }
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    employee.password = encryptedPassword;
+    await this.employeeRepository.save(employee);
+    await this.tokenService.deleteToken(validateToken.id);
+    return employee;
+  }
 }

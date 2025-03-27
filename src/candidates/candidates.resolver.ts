@@ -52,11 +52,9 @@ export class CandidatesResolver {
   @Mutation(() => Candidate)
   async candidateResetPassword(
     @Args('password') password: string,
-    @Context() context:any
-  ): Promise<Candidate> { 
+    @Context() context: any,
+  ): Promise<Candidate> {
     const token = context.req.headers.token;
     return await this.candidateService.resetPassword(password, token);
   }
-
-
 }

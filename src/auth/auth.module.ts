@@ -11,7 +11,7 @@ import { Employee } from './../../src/employees/employees.entity';
     TypeOrmModule.forFeature([Candidate, Employee]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'ironwoman890',
+      secret: 'a3f89c2b7d5e461fa8cbe2d0174f9a6ddf327b1c6e8a5c4f0d7e3b98a12f6c7d',
       signOptions: {
         expiresIn: '7d',
       },

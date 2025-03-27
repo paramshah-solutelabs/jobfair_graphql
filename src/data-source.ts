@@ -10,7 +10,8 @@ import { Tokens } from './tokens/tokens.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url:`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  url: 'postgres://postgres:postgres@postgres:5432/jobfair',
+  // url:`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   entities: [
     Department,
     Position,

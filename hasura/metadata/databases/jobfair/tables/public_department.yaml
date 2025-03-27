@@ -17,17 +17,73 @@ array_relationships:
           name: position
           schema: public
 insert_permissions:
-  - role: hr
+  - role: Employee
     permission:
       check: {}
-      columns: []
-    comment: ""
-select_permissions:
-  - role: hr
-    permission:
       columns:
         - description
         - isActive
+    comment: ""
+  - role: Hr
+    permission:
+      check: {}
+      columns:
+        - isActive
+        - description
         - name
+        - created_at
+        - updated_at
+        - id
+    comment: ""
+  - role: Interviewer
+    permission:
+      check: {}
+      columns:
+        - description
+        - id
+        - name
+    comment: ""
+  - role: Param
+    permission:
+      check: {}
+      columns:
+        - description
+        - isActive
+    comment: ""
+select_permissions:
+  - role: Hr
+    permission:
+      columns:
+        - created_at
+        - id
+        - isActive
+        - name
+        - updated_at
+      filter: {}
+    comment: ""
+  - role: Interviewer
+    permission:
+      columns:
+        - description
+        - id
+        - isActive
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: Hr
+    permission:
+      columns:
+        - isActive
+        - description
+        - name
+        - created_at
+        - updated_at
+        - id
+      filter: {}
+      check: {}
+    comment: ""
+delete_permissions:
+  - role: Hr
+    permission:
       filter: {}
     comment: ""

@@ -24,7 +24,7 @@ export class JobApplicationRepository {
   async createApplication(
     createApplicationData: CreateJobApplicationDto,
   ): Promise<JobApplication> {
-    console.log("hello world")
+    console.log('hello world');
     const position = await this.positionService.getPositionById(
       createApplicationData.positionId,
     );

@@ -6,10 +6,12 @@ import { JobapplicationModule } from './../../src/jobapplication/jobapplication.
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Interview } from './interviews.entity';
 import { InterviewRepository } from './interviews.repository';
+import { AuthModule } from './../../src/auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Interview]),
+    AuthModule,
     EmployeesModule,
     JobapplicationModule,
   ],

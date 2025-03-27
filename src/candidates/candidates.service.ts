@@ -23,14 +23,13 @@ export class CandidatesService {
     return await this.candidateRepo.createCandidateWithApplication(email);
   }
 
-  async forgotPassword(email:string):Promise<InviteResponse>{
-    return await this.candidateRepo.forgotPassword(email)
+  async forgotPassword(email: string): Promise<InviteResponse> {
+    return await this.candidateRepo.forgotPassword(email);
   }
 
-  async resetPassword(password:string,token:string):Promise<Candidate>{
-    return await this.candidateRepo.candidateResetPassword(password,token);
+  async resetPassword(password: string, token: string): Promise<Candidate> {
+    return await this.candidateRepo.candidateResetPassword(password, token);
   }
-
 
   async registerCandidate(
     setCandidateData: SetCandidateDto,
@@ -44,5 +43,4 @@ export class CandidatesService {
   ): Promise<AuthResponse> {
     return await this.candidateRepo.candidateLogin(loginCandidateData);
   }
-
 }

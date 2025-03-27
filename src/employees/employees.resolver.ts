@@ -37,28 +37,26 @@ export class EmployeesResolver {
   }
 
   @Mutation(() => InviteResponse)
-  async employeeForgotPassword(@Args('email') email: string): Promise<InviteResponse> {
+  async employeeForgotPassword(
+    @Args('email') email: string,
+  ): Promise<InviteResponse> {
     return await this.employeeService.forgotPassword(email);
   }
 
   @Mutation(() => Employee)
   async employeePasswordReset(
     @Args('password') password: string,
-    @Context() context:any
+    @Context() context: any,
   ): Promise<Employee> {
-    const token=context.req.headers.token;
+    const token = context.req.headers.token;
     if (!password) {
       throw new BadRequestException('Password is required');
     }
     return await this.employeeService.resetPassword(password, token);
   }
 
-
   @Mutation(() => AuthResponse)
-  async employeeLogin(
-    @Args('data') data: LoginUserDto,
-  ) {
+  async employeeLogin(@Args('data') data: LoginUserDto) {
     return this.employeeService.loginEmployee(data);
   }
-
 }

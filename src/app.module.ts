@@ -29,9 +29,9 @@ import { TokensModule } from './tokens/tokens.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url:`postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+      url: `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
       autoLoadEntities: true,
-      synchronize: false, 
+      synchronize: false,
     }),
     DepartmentsModule,
     PositionsModule,

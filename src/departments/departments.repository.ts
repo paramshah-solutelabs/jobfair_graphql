@@ -10,7 +10,7 @@ export class DepartmentsRepository {
   constructor(
     @InjectRepository(Department)
     private departmentRepo: Repository<Department>,
-    private dataSource:DataSource
+    private dataSource: DataSource,
   ) {}
 
   async createDepartment(

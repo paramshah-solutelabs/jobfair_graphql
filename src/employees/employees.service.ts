@@ -22,8 +22,9 @@ export class EmployeesService {
     return await this.employeeRepository.getEmployeeById(id);
   }
 
-
-  async inviteEmployee(inviteEmployeeData: InviteEmployeeDto):Promise<InviteResponse> {
+  async inviteEmployee(
+    inviteEmployeeData: InviteEmployeeDto,
+  ): Promise<InviteResponse> {
     return await this.employeeRepository.inviteEmployee(inviteEmployeeData);
   }
 
@@ -34,15 +35,15 @@ export class EmployeesService {
     return await this.employeeRepository.setEmployeePassword(token, password);
   }
 
-  async loginEmployee(loginEmployeeData:LoginUserDto):Promise<AuthResponse>{
+  async loginEmployee(loginEmployeeData: LoginUserDto): Promise<AuthResponse> {
     return await this.employeeRepository.loginEmployee(loginEmployeeData);
   }
 
-  async forgotPassword(email:string){
+  async forgotPassword(email: string) {
     return await this.employeeRepository.forgotPassword(email);
   }
 
-  async resetPassword(password:string,token:string):Promise<Employee>{
-    return await this.employeeRepository.employeePasswordReset(password,token);
+  async resetPassword(password: string, token: string): Promise<Employee> {
+    return await this.employeeRepository.employeePasswordReset(password, token);
   }
 }

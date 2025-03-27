@@ -13,7 +13,9 @@ export class IsEmployee implements CanActivate {
     const user = ctx.getContext().req.user;
     console.log(user);
     if (!user || !user.employment_status) {
-      throw new ForbiddenException('Only Employees have the access to the data');
+      throw new ForbiddenException(
+        'Only Employees have the access to the data',
+      );
     }
     return true;
   }

@@ -15,7 +15,7 @@ import { EmailModule } from './../../src/email/email.module';
     TokensModule,
     AuthModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    EmailModule
+    EmailModule,
   ],
   providers: [CandidatesService, CandidatesResolver, CandidatesRepository],
   exports: [CandidatesService],

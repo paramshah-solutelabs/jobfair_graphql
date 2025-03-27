@@ -10,7 +10,6 @@ import { Position } from './../../src/positions/positions.entity';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Employee } from './../../src/employees/employees.entity';
 
-
 @ObjectType()
 @Entity()
 export class Department {
