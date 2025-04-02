@@ -35,9 +35,12 @@ export class EmployeeRepository {
     createEmployeeData: CreateEmployeeDto,
   ): Promise<Employee> {
     const createEmployee = this.employeeRepository.create(createEmployeeData);
+    console.log("It is reaching till here");
+    console.log(createEmployeeData.department_id);
     const department = await this.departmentService.getDepartmentById(
       createEmployeeData.department_id,
     );
+    console.log(department);
     createEmployee.department = department;
     return await this.employeeRepository.save(createEmployee);
   }
@@ -79,6 +82,7 @@ export class EmployeeRepository {
       inviteEmployeeData.role,
     );
     employee.employment_status = EmployeeStatus.Invited;
+    employee.type=inviteEmployeeData.role;
     await this.employeeRepository.save(employee);
     return { message: 'Employee invitation sent' };
   }
@@ -104,33 +108,84 @@ export class EmployeeRepository {
     return employee;
   }
 
+  // async loginEmployee(loginEmployeeData: LoginUserDto): Promise<AuthResponse> {
+  //   const employee = await this.employeeRepository.findOne({
+  //     where: { email: loginEmployeeData.email },
+  //   });
+  //   if (!employee) {
+  //     throw new NotFoundException();
+  //   }
+  //   const isPasswordValid = await bcrypt.compare(
+  //     loginEmployeeData.password,
+  //     employee.password,
+  //   );
+  //   if (!isPasswordValid) {
+  //     throw new UnauthorizedException('Invalid credentials');
+  //   }
+  //   const payload = {
+  //     id: employee.id,
+  //     email: employee.email,
+  //     hasura_claims : {
+  //       "x-hasura-user-id": employee.id,
+  //       "x-hasura-default-role": 'Employee',
+  //       "x-hasura-allowed-roles": ["Employee","Hr","Interviewer"],
+  //       // "x-hasura-role":employee.type
+  //     },
+  //   };
+  //   const jwtToken = await this.jwtService.sign(payload);
+  //   return { access_token: jwtToken };
+  // }
   async loginEmployee(loginEmployeeData: LoginUserDto): Promise<AuthResponse> {
     const employee = await this.employeeRepository.findOne({
       where: { email: loginEmployeeData.email },
     });
+  
     if (!employee) {
       throw new NotFoundException();
     }
+  
     const isPasswordValid = await bcrypt.compare(
       loginEmployeeData.password,
       employee.password,
     );
+  
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
+  
+    const role = employee.type;
+    let allowedRoles: string[] = [];
+  
+    switch (role) {
+      case 'Hr':
+        allowedRoles = ['Employee', 'Hr', 'Interviewer', 'Recruiter', 'HiringManager'];
+        break;
+      case 'Employee':
+        allowedRoles = ['Employee'];
+        break;
+      case 'Interviewer':
+      case 'Recruiter':
+      case 'HiringManager':
+        allowedRoles = ['Employee', 'Interviewer', 'Recruiter', 'HiringManager'];
+        break;
+      default:
+        throw new UnauthorizedException('Invalid role');
+    }
+  
     const payload = {
       id: employee.id,
       email: employee.email,
-      hasura_claims : {
-        "x-hasura-user-id": employee.id,
-        "x-hasura-default-role": 'Employee',
-        "x-hasura-allowed-roles": ["Employee","Hr","Interviewer"],
-        // "x-hasura-role":employee.type
+      hasura_claims: {
+        'x-hasura-user-id': employee.id,
+        'x-hasura-default-role': role,
+        'x-hasura-allowed-roles': allowedRoles,
       },
     };
+    
     const jwtToken = await this.jwtService.sign(payload);
     return { access_token: jwtToken };
   }
+  
 
   async forgotPassword(email: string): Promise<InviteResponse> {
     const employee = await this.employeeRepository.findOne({

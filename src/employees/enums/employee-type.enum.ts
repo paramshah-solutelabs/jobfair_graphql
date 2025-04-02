@@ -5,6 +5,7 @@ export enum EmployeeType {
   HIRINGMANAGER = 'HiringManager',
   RECRUITER = 'Recruiter',
   HR = 'Hr',
+  EMPLOYEE='Employee'
 }
 
 registerEnumType(EmployeeType, {

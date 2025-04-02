@@ -1,6 +1,22 @@
-actions: []
+actions:
+  - name: canidateLogin
+    definition:
+      kind: synchronous
+      handler: http://nestjs:3000/auth/candidateLogin
+      timeout: 2
+    comment: canididate login
+  - name: employeeLogin1
+    definition:
+      kind: synchronous
+      handler: http://nestjs:3000/auth/login
+    permissions:
+      - role: public
+    comment: mylogin
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+    - name: SampleInput
+  objects:
+    - name: LoginResponse
+    - name: SampleOutput
   scalars: []

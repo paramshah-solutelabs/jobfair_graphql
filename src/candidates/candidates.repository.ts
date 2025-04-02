@@ -37,6 +37,8 @@ export class CandidatesRepository {
     registerCandidateData: SetCandidateDto,
     token: string,
   ): Promise<Candidate> {
+    console.log(registerCandidateData);
+    console.log(token);
     const validateToken = await this.tokenService.validateToken(token);
     if (!validateToken.candidate) {
       throw new NotFoundException();

@@ -1,1 +1,418 @@
-[]
+- name: jobfair
+  definition:
+    url: http://nestjs:3000/graphql
+    timeout_seconds: 60
+    customization: {}
+    forward_client_headers: true
+  comment: ""
+  permissions:
+    - role: Interviewer
+      definition:
+        schema: |
+          schema {
+            query: Query
+            mutation: Mutation
+          }
+          scalar DateTime
+          type Candidate {
+            created_at: DateTime!
+            current_company: String
+            current_position: String
+            email: String!
+            first_name: String
+            id: ID!
+            image_url: String
+            last_name: String
+            linkedIn_url: String
+            notes: String
+            password: String
+            phone: String
+            rejection_date: DateTime
+            resume_url: String
+            source: String
+            status: Status
+            token: Tokens
+            updated_at: DateTime!
+          }
+          type Department {
+            created_at: DateTime!
+            description: String!
+            employees: [Employee!]
+            id: String!
+            isActive: Boolean!
+            name: String!
+            positions: [Position!]
+            updated_at: DateTime!
+          }
+          type Employee {
+            created_At: DateTime!
+            department: Department!
+            email: String!
+            employment_status: EmployeeStatus!
+            first_name: String!
+            hire_date: String!
+            id: String!
+            interviews: [Interview!]
+            is_Active: Boolean!
+            last_name: String!
+            password: String
+            phone: String!
+            reviews: [Review!]
+            role: String!
+            token: Tokens
+            type: EmployeeType
+            updated_At: DateTime!
+          }
+          type Interview {
+            application: JobApplication!
+            created_at: DateTime!
+            date: String!
+            employee: Employee!
+            id: String!
+            meeting_link: String!
+            notes: String!
+            reviews: [Review!]
+            round: Int!
+            scheduled_end_time: String!
+            scheduled_start_time: String!
+            status: MeetingStatus!
+            type: MeetingType!
+            updated_at: DateTime!
+          }
+          type InviteResponse {
+            message: String!
+          }
+          type JobApplication {
+            application_date: String!
+            cover_letter_url: String
+            created_at: DateTime!
+            email: String!
+            expected_salary: Float
+            has_reviewed: Boolean!
+            id: String!
+            internal_notes: String
+            interview: [Interview!]
+            position: Position!
+            referral_source: String
+            resume_url: String!
+            status: ApplicationStatus!
+            updated_at: DateTime!
+          }
+          type Mutation {
+            employeeForgotPassword(email: String!): InviteResponse!
+          }
+          type Position {
+            closing_date: String!
+            created_at: DateTime!
+            department: Department!
+            description: String!
+            experience_level: String!
+            id: String!
+            is_remote: Boolean!
+            jobapplications: [JobApplication!]
+            location: String!
+            openings: Float!
+            position_type: String!
+            posted_date: String!
+            requirements: String!
+            salary_max: Float!
+            salary_min: Float!
+            title: String!
+            updated_at: DateTime!
+          }
+          type Query {
+            getCandidateById(id: String!): Candidate!
+            getDepartmentById(id: String!): Department!
+            getDepartments: [Department!]!
+          }
+          type Review {
+            communication_score: Float!
+            created_at: DateTime!
+            employee: Employee!
+            id: ID!
+            interview: Interview!
+            is_Recommended: Boolean!
+            review_date: String!
+            review_text: String!
+            status: reviewStatus!
+            technical_score: Float!
+            updated_at: DateTime!
+          }
+          type Tokens {
+            candidate: Candidate
+            employee: Employee
+            expiryDate: DateTime!
+            id: ID!
+            token: String!
+          }
+          enum ApplicationStatus {
+            APPROVED
+            HIRED
+            INTERVIEW
+            NEW
+            OFFER
+            REJECTED
+            REVIEW
+            SCREENING
+          }
+          enum EmployeeStatus {
+            Active
+            Contract
+            Fulltime
+            Invited
+            Parttime
+          }
+          enum EmployeeType {
+            EMPLOYEE
+            HIRINGMANAGER
+            HR
+            INTERVIEWER
+            RECRUITER
+          }
+          enum MeetingStatus {
+            CANCELLED
+            COMPLETED
+            SCHEDULED
+          }
+          enum MeetingType {
+            IN_PERSON
+            PHONE
+            VIRTUAL
+          }
+          enum Status {
+            Active
+            Blocklisted
+            Inactive
+          }
+          enum reviewStatus {
+            APPROVED
+            DRAFT
+            SUBMITTED
+          }
+    - role: public
+      definition:
+        schema: |
+          schema {
+            query: Query
+            mutation: Mutation
+          }
+          scalar DateTime
+          type AuthResponse {
+            access_token: String!
+          }
+          type Candidate {
+            created_at: DateTime!
+            current_company: String
+            current_position: String
+            email: String!
+            first_name: String
+            id: ID!
+            image_url: String
+            last_name: String
+            linkedIn_url: String
+            notes: String
+            password: String
+            phone: String
+            rejection_date: DateTime
+            resume_url: String
+            source: String
+            status: Status
+            token: Tokens
+            updated_at: DateTime!
+          }
+          type Department {
+            created_at: DateTime!
+            description: String!
+            employees: [Employee!]
+            id: String!
+            isActive: Boolean!
+            name: String!
+            positions: [Position!]
+            updated_at: DateTime!
+          }
+          type Employee {
+            created_At: DateTime!
+            department: Department!
+            email: String!
+            employment_status: EmployeeStatus!
+            first_name: String!
+            hire_date: String!
+            id: String!
+            interviews: [Interview!]
+            is_Active: Boolean!
+            last_name: String!
+            password: String
+            phone: String!
+            reviews: [Review!]
+            role: String!
+            token: Tokens
+            type: EmployeeType
+            updated_At: DateTime!
+          }
+          type Interview {
+            application: JobApplication!
+            created_at: DateTime!
+            date: String!
+            employee: Employee!
+            id: String!
+            meeting_link: String!
+            notes: String!
+            reviews: [Review!]
+            round: Int!
+            scheduled_end_time: String!
+            scheduled_start_time: String!
+            status: MeetingStatus!
+            type: MeetingType!
+            updated_at: DateTime!
+          }
+          type InviteResponse {
+            message: String!
+          }
+          type JobApplication {
+            application_date: String!
+            cover_letter_url: String
+            created_at: DateTime!
+            email: String!
+            expected_salary: Float
+            has_reviewed: Boolean!
+            id: String!
+            internal_notes: String
+            interview: [Interview!]
+            position: Position!
+            referral_source: String
+            resume_url: String!
+            status: ApplicationStatus!
+            updated_at: DateTime!
+          }
+          type Mutation {
+            candidateLogin(loginCandidateData: LoginUserDto!): AuthResponse!
+            createApplication(data: CreateJobApplicationDto!): JobApplication!
+            createCandidate(data: CreateCandidateDto!): Candidate!
+            registerCandidate(registerCandidateData: SetCandidateDto!): Candidate!
+          }
+          type Position {
+            closing_date: String!
+            created_at: DateTime!
+            department: Department!
+            description: String!
+            experience_level: String!
+            id: String!
+            is_remote: Boolean!
+            jobapplications: [JobApplication!]
+            location: String!
+            openings: Float!
+            position_type: String!
+            posted_date: String!
+            requirements: String!
+            salary_max: Float!
+            salary_min: Float!
+            title: String!
+            updated_at: DateTime!
+          }
+          type Query {
+            getCandidateById(id: String!): Candidate!
+            getDepartmentById(id: String!): Department!
+            getDepartments: [Department!]!
+          }
+          type Review {
+            communication_score: Float!
+            created_at: DateTime!
+            employee: Employee!
+            id: ID!
+            interview: Interview!
+            is_Recommended: Boolean!
+            review_date: String!
+            review_text: String!
+            status: reviewStatus!
+            technical_score: Float!
+            updated_at: DateTime!
+          }
+          type Tokens {
+            candidate: Candidate
+            employee: Employee
+            expiryDate: DateTime!
+            id: ID!
+            token: String!
+          }
+          enum ApplicationStatus {
+            APPROVED
+            HIRED
+            INTERVIEW
+            NEW
+            OFFER
+            REJECTED
+            REVIEW
+            SCREENING
+          }
+          enum EmployeeStatus {
+            Active
+            Contract
+            Fulltime
+            Invited
+            Parttime
+          }
+          enum EmployeeType {
+            EMPLOYEE
+            HIRINGMANAGER
+            HR
+            INTERVIEWER
+            RECRUITER
+          }
+          enum MeetingStatus {
+            CANCELLED
+            COMPLETED
+            SCHEDULED
+          }
+          enum MeetingType {
+            IN_PERSON
+            PHONE
+            VIRTUAL
+          }
+          enum Status {
+            Active
+            Blocklisted
+            Inactive
+          }
+          enum reviewStatus {
+            APPROVED
+            DRAFT
+            SUBMITTED
+          }
+          input CreateCandidateDto {
+            current_company: String
+            current_position: String
+            email: String!
+            first_name: String!
+            last_name: String!
+            linkedIn_url: String
+            notes: String
+            password: String!
+            phone: String!
+            source: String
+            status: Status
+          }
+          input CreateJobApplicationDto {
+            cover_letter_url: String
+            email: String!
+            expected_salary: Float
+            positionId: String
+            referral_source: String
+            resume_url: String!
+            status: ApplicationStatus = NEW
+          }
+          input LoginUserDto {
+            email: String!
+            password: String!
+          }
+          input SetCandidateDto {
+            current_company: String
+            current_position: String
+            first_name: String!
+            last_name: String!
+            linkedIn_url: String
+            notes: String
+            password: String!
+            phone: String!
+            source: String
+            status: Status
+          }

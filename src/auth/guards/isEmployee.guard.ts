@@ -7,9 +7,11 @@ export class isEmployee implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const user=ctx.getContext().req.user;
     console.log(user);
+    console.log(user);
     if(!user || !user.department){
         throw new UnauthorizedException("Only employees can access this data")
     }
     return true;
   }
+
 }

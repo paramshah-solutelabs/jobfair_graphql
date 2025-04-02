@@ -1,0 +1,27 @@
+type Mutation {
+  canidateLogin(
+    email: String!
+    password: String!
+  ): LoginResponse
+}
+
+type Mutation {
+  employeeLogin1(
+    email: String!
+    password: String!
+  ): LoginResponse
+}
+
+input SampleInput {
+  username: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type SampleOutput {
+  accessToken: String!
+}
+

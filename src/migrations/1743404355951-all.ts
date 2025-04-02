@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class All1743060507681 implements MigrationInterface {
-    name = 'All1743060507681'
+export class All1743404355951 implements MigrationInterface {
+    name = 'All1743404355951'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "public"."review_status_enum" AS ENUM('Draft', 'Submitted', 'Approved')`);
@@ -9,7 +9,7 @@ export class All1743060507681 implements MigrationInterface {
         await queryRunner.query(`CREATE TYPE "public"."candidate_status_enum" AS ENUM('active', 'inactive', 'blocklisted')`);
         await queryRunner.query(`CREATE TABLE "candidate" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "email" character varying NOT NULL, "first_name" character varying, "last_name" character varying, "password" character varying, "phone" character varying, "resume_url" character varying, "linkedIn_url" character varying, "current_company" character varying, "current_position" character varying, "source" character varying, "rejection_date" TIMESTAMP, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "status" "public"."candidate_status_enum" DEFAULT 'inactive', "notes" character varying, "image_url" character varying, CONSTRAINT "UQ_80e766f22573be71b86b2f05371" UNIQUE ("email"), CONSTRAINT "PK_b0ddec158a9a60fbc785281581b" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "tokens" ("id" SERIAL NOT NULL, "token" character varying NOT NULL, "expiryDate" TIMESTAMP NOT NULL DEFAULT now(), "candidateId" uuid, "employeeId" uuid, CONSTRAINT "REL_0fffde7180d5ac814e984b67fd" UNIQUE ("candidateId"), CONSTRAINT "REL_e276451ec4fcc1f4b114395ca2" UNIQUE ("employeeId"), CONSTRAINT "PK_3001e89ada36263dabf1fb6210a" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TYPE "public"."employee_type_enum" AS ENUM('Interviewer', 'HiringManager', 'Recruiter', 'Hr')`);
+        await queryRunner.query(`CREATE TYPE "public"."employee_type_enum" AS ENUM('Interviewer', 'HiringManager', 'Recruiter', 'Hr', 'Employee')`);
         await queryRunner.query(`CREATE TYPE "public"."employee_employment_status_enum" AS ENUM('Fulltime', 'Parttime', 'Invited', 'Active', 'Contract')`);
         await queryRunner.query(`CREATE TABLE "employee" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "first_name" character varying NOT NULL, "last_name" character varying NOT NULL, "email" character varying NOT NULL, "phone" character varying NOT NULL, "role" character varying NOT NULL, "type" "public"."employee_type_enum", "hire_date" date NOT NULL, "employment_status" "public"."employee_employment_status_enum" NOT NULL, "password" character varying, "created_At" TIMESTAMP NOT NULL DEFAULT now(), "updated_At" TIMESTAMP NOT NULL DEFAULT now(), "is_Active" boolean NOT NULL, "departmentId" uuid, CONSTRAINT "PK_3c2bc72f03fd5abbbc5ac169498" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."interview_type_enum" AS ENUM('In-Person', 'Virtual', 'Phone')`);

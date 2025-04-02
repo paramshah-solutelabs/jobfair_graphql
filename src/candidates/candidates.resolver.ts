@@ -14,7 +14,10 @@ export class CandidatesResolver {
   constructor(private candidateService: CandidatesService) {}
 
   @Mutation(() => Candidate)
-  async createCandidate(@Args('data') createCandidate: CreateCandidateDto) {
+  async createCandidate(
+    @Args('data') createCandidate: CreateCandidateDto,
+
+  ) {
     return await this.candidateService.createCandidate(createCandidate);
   }
 
@@ -29,6 +32,7 @@ export class CandidatesResolver {
     @Context() context: any,
   ): Promise<Candidate> {
     const token = context.req.headers.token;
+    console.log(context.req.headers.token);
     return this.candidateService.registerCandidate(
       registerCandidateData,
       token,

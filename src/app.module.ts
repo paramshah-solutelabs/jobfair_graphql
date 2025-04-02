@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ConfigModule } from '@nestjs/config';
 import { TokensModule } from './tokens/tokens.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { TokensModule } from './tokens/tokens.module';
     AuthModule,
     EmailModule,
     TokensModule,
+    WebhookModule,
   ],
   controllers: [],
   providers: [ModulesContainer],

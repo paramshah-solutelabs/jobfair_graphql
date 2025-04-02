@@ -4,17 +4,21 @@ import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { InviteEmployeeDto } from './dto/invite-employee.dto';
 import { Context } from '@nestjs/graphql';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { AuthResponse } from './../../src/candidates/dto/auth-response.dto';
 import { LoginUserDto } from './../../src/candidates/dto/login-candidate.dto';
 import { InviteResponse } from './dto/invite-sent.dto';
 import { BadRequestException } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GqlAuthGuard } from './../../src/auth/gql-auth.guard';
+import { isEmployee } from './../../src/auth/guards/isEmployee.guard';
 
 @Resolver(() => Employee)
 export class EmployeesResolver {
   constructor(private employeeService: EmployeesService) {}
 
   @Mutation(() => Employee)
+  // @UseGuards(GqlAuthGuard,isEmployee)
   async createEmployee(@Args('data') data: CreateEmployeeDto) {
     return await this.employeeService.createEmployee(data);
   }
@@ -37,11 +41,14 @@ export class EmployeesResolver {
   }
 
   @Mutation(() => InviteResponse)
+  // @UseGuards(GqlAuthGuard)
   async employeeForgotPassword(
     @Args('email') email: string,
   ): Promise<InviteResponse> {
+    console.log(email);
     return await this.employeeService.forgotPassword(email);
   }
+
 
   @Mutation(() => Employee)
   async employeePasswordReset(

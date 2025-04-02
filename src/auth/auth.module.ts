@@ -5,6 +5,10 @@ import { JwtStrategy } from './jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Candidate } from './../../src/candidates/candidate.entity';
 import { Employee } from './../../src/employees/employees.entity';
+import { AuthController } from './auth.controller';
+import { forwardRef } from '@nestjs/common';
+import { EmployeesModule } from './../../src/employees/employees.module';
+import { CandidatesModule } from './../../src/candidates/candidates.module';
 
 @Module({
   imports: [
@@ -16,8 +20,11 @@ import { Employee } from './../../src/employees/employees.entity';
         expiresIn: '7d',
       },
     }),
+    forwardRef(() => EmployeesModule) ,
+    forwardRef(()=>CandidatesModule)
   ],
   providers: [JwtStrategy],
   exports: [PassportModule, JwtModule, JwtStrategy],
+  controllers: [AuthController],
 })
 export class AuthModule {}

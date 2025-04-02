@@ -164,6 +164,7 @@ enum EmployeeStatus {
 
 """Types of employees in the system"""
 enum EmployeeType {
+  EMPLOYEE
   HIRINGMANAGER
   HR
   INTERVIEWER

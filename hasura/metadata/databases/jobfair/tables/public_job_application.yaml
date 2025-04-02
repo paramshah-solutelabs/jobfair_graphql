@@ -1,3 +1,50 @@
 table:
   name: job_application
   schema: public
+object_relationships:
+  - name: position
+    using:
+      foreign_key_constraint_on: positionId
+array_relationships:
+  - name: interviews
+    using:
+      foreign_key_constraint_on:
+        column: applicationId
+        table:
+          name: interview
+          schema: public
+insert_permissions:
+  - role: HR
+    permission:
+      check: {}
+      columns:
+        - application_date
+        - cover_letter_url
+        - email
+        - expected_salary
+        - has_reviewed
+        - internal_notes
+        - positionId
+        - referral_source
+        - resume_url
+        - status
+    comment: ""
+select_permissions:
+  - role: HR
+    permission:
+      columns:
+        - has_reviewed
+        - cover_letter_url
+        - email
+        - referral_source
+        - resume_url
+        - application_date
+        - expected_salary
+        - internal_notes
+        - created_at
+        - updated_at
+        - status
+        - id
+        - positionId
+      filter: {}
+    comment: ""
